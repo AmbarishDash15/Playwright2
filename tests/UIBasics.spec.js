@@ -9,7 +9,7 @@ test('Browser Context Playwright Test',async ({browser}) => {
 
 test('Page Playwright Test',async ({page}) => {
     await page.goto('https://www.google.com/');
-    console.log(await page.title());
+    //console.log(await page.title());
     await expect(page).toHaveTitle('Google');
 });
 
@@ -20,7 +20,7 @@ test('Validate Incorrect Login Error',async ({browser}) => {
     await page.locator('#username').fill('rahulshetty');
     await page.locator('[name="password"]').fill('learning');
     await page.locator('#signInBtn').click();
-    console.log(await page.locator('[style*="block"]').textContent());
+    //console.log(await page.locator('[style*="block"]').textContent());
     await expect(page.locator('[style*="block"]')).toContainText('Incorrect username/password.');
 });
 
@@ -29,7 +29,7 @@ test('Validate Empty User Name Login Error',async ({page}) => {
     await page.locator('#username').fill('');
     await page.locator('[name="password"]').fill('learning');
     await page.locator('#signInBtn').click();
-    console.log(await page.locator('[style*="block"]').textContent());
+    //console.log(await page.locator('[style*="block"]').textContent());
     await expect(page.locator('[style*="block"]')).toContainText('Empty username/password.');
 });
 
@@ -38,7 +38,7 @@ test('Get Login Credentials from page',async ({page}) => {
     await page.waitForLoadState('networkidle');
     const loginStringArr = (await page.locator('.text-center.text-white').textContent()).split(' ');
     const userName = await loginStringArr[2];
-    const passWord = await loginStringArr[5].split(')')[0];
+    const passWord = await loginStringArr[6].split(')')[0];
     await console.log('User Name : '+userName+' and Password : '+passWord)
 });
 
@@ -102,7 +102,7 @@ test('Child window interaction',async ({browser}) => {
     const username = await (emailText.split('@')[1]).split('.')[0];
     //await page.bringToFront();
     await page.locator('#username').fill(username);
-    console.log(await page.locator('#username').inputValue());
+    //console.log(await page.locator('#username').inputValue());
 
 });
 
