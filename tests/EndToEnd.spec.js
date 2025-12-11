@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test')
 
-test.only('End to End Client App',async({browser}) => {
+test('End to End Client App',async({browser}) => {
     const itemToBuy = 'ADIDAS ORIGINAL'; //testdata
     const loginEmail = 'dash.ambarish15@gmail.com'; //test data
     const context = await browser.newContext();
@@ -118,22 +118,4 @@ test.only('End to End Client App',async({browser}) => {
     expect(await deliveryAddress.locator('p.text').first().textContent()).toContain(loginEmail);
     expect(await deliveryAddress.locator('p.text').last().textContent()).toContain(country);
     expect(await orderSummItemName.textContent()).toContain(itemToBuy);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //await page.pause();
 })
