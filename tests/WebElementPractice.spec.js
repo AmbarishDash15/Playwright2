@@ -74,11 +74,11 @@ test('Handle Dialog Boxes',async({page})=> {
         const dialogMsg = await dialog.message();
         assert(dialog.message().includes('Tester'));
         if(dialogMsg.includes('Are you sure you want to confirm?')){
-            console.log(dialogMsg);
+            console.log('Confirm box message: '+dialogMsg);
             await dialog.dismiss();
         }
         else{
-            console.log(dialogMsg);
+            console.log('Alert box message: '+dialogMsg);
             await dialog.dismiss();
         }
         
@@ -143,7 +143,7 @@ test('Verify webelement visibility',async({page}) => {
     await expect(hideShowTextBox).toBeVisible();
 })
 
-test.only('Interact with iFrame',async({page}) => {
+test('Interact with iFrame',async({page}) => {
     await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
     const iFramePageElement = page.locator('iframe#courses-iframe');
     const iFramePage = iFramePageElement.contentFrame();
