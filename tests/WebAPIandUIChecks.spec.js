@@ -22,6 +22,7 @@ test('End to End using API Login', async({page}) => {
     const itemNameList = page.locator('div.card-body');
     const cartButton = page.locator('button.btn-custom i.fa-shopping-cart');
     const checkOutBtn = page.locator('li.totalRow button');
+    const cartSection = page.locator('div.cart');
     const itemCount = await itemNameList.count();
     for(var i = 1;i <= itemCount;i++){
         if(await itemNameList.nth(i).locator('b').textContent() === itemToBuy){
@@ -33,10 +34,8 @@ test('End to End using API Login', async({page}) => {
     //verify added item on cart page
     await page.getByText('Product Added To Cart').waitFor({state:'hidden'});
     await cartButton.click();
-    await page.waitForLoadState('networkidle');
-    await checkOutBtn.waitFor({state : 'visible'});
-    const cartItemBool = await page.locator('h3:has-text('+itemToBuy+')')
-    expect(cartItemBool).toBeTruthy();
+    await cartSection.waitFor({state : 'visible'});
+    expect(await cartItemName.textContent()).toContain(itemToBuy);
 
     //go to check out page and fill details
     const creditCardNoField = page.locator('div.form__cc input').first();
