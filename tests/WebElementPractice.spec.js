@@ -1,7 +1,7 @@
 const {test, expect} = require('@playwright/test');
 const { assert } = require('console');
 
-test('Interact elements on Practice Page',async({page}) => {
+test('Interact with Web elements',async({page}) => {
     await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
     //radio button
     const radioBtn1 = page.locator('[value="radio1"]');
@@ -41,7 +41,7 @@ test('Interact elements on Practice Page',async({page}) => {
     await expect(chkBxOpn2).toBeChecked();
 })
 
-test('Handle new window and tab on Practice Page',async({browser}) => {
+test('Handle new window and tab',async({browser}) => {
     const context = await browser.newContext();
     const page = await context.newPage();
     await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
