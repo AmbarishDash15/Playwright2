@@ -1,8 +1,8 @@
 const {test, expect} = require('@playwright/test')
 
 
-test.only('Browser Context Playwright Test',async ({browser}) => {
-    const context = await browser.newContext();
+test('Browser Context Playwright Test',async ({browser}) => {
+    const context = await browser.newContext({ignoreHTTPSErrors: true});
     const page = await context.newPage();
     await page.goto('https://rahulshettyacademy.com/');
     await page.locator('[href="/practice"]').first().click();
@@ -23,8 +23,8 @@ test('Page Playwright Test',async ({page}) => {
     await expect(page).toHaveTitle('Google');
 });
 
-test.skip('Validate Incorrect Login Error',async ({browser}) => {
-    const context = await browser.newContext();
+test('Validate Incorrect Login Error',async ({browser}) => {
+    const context = await browser.newContext({ignoreHTTPSErrors: true});
     const page = await context.newPage();
     await page.goto('http://www.rahulshettyacademy.com/loginpagePractise/');
     await page.locator('#username').fill('rahulshetty');
@@ -34,7 +34,9 @@ test.skip('Validate Incorrect Login Error',async ({browser}) => {
     await expect(page.locator('[style*="block"]')).toContainText('Incorrect username/password.');
 });
 
-test.skip('Validate Empty User Name Login Error',async ({page}) => {
+test('Validate Empty User Name Login Error',async ({browser}) => {
+    const context = await browser.newContext({ignoreHTTPSErrors: true});
+    const page = await context.newPage();
     await page.goto('http://www.rahulshettyacademy.com/loginpagePractise/');
     await page.locator('#username').fill('');
     await page.locator('[name="password"]').fill('learning');
@@ -43,7 +45,9 @@ test.skip('Validate Empty User Name Login Error',async ({page}) => {
     await expect(page.locator('[style*="block"]')).toContainText('Empty username/password.');
 });
 
-test.skip('Get Login Credentials from page',async ({page}) => {
+test('Get Login Credentials from page',async ({browser}) => {
+    const context = await browser.newContext({ignoreHTTPSErrors: true});
+    const page = await context.newPage();
     await page.goto('http://www.rahulshettyacademy.com/loginpagePractise/');
     await page.waitForLoadState('networkidle');
     const loginStringArr = (await page.locator('.text-center.text-white').textContent()).split(' ');
@@ -52,7 +56,9 @@ test.skip('Get Login Credentials from page',async ({page}) => {
     await console.log('User Name : '+userName+' and Password : '+passWord)
 });
 
-test.skip('Interact Login page UI elements',async ({page}) => {
+test('Interact Login page UI elements',async ({browser}) => {
+    const context = await browser.newContext({ignoreHTTPSErrors: true});
+    const page = await context.newPage();
     const userNameField = page.locator('#username');
     const passwordField = page.locator('[name="password"]');
     const signInButton = page.locator('#signInBtn');
@@ -77,7 +83,9 @@ test.skip('Interact Login page UI elements',async ({page}) => {
     await expect(linkDoc).toHaveAttribute('class','blinkingText')
 });
 
-test.skip('Get Login Credentials from page and Login',async ({page}) => {
+test('Get Login Credentials from page and Login',async ({browser}) => {
+    const context = await browser.newContext({ignoreHTTPSErrors: true});
+    const page = await context.newPage();
     const userNameField = page.locator('#username');
     const passwordField = page.locator('[name="password"]');
     const chkBxTnC = page.locator('#terms');
@@ -98,8 +106,8 @@ test.skip('Get Login Credentials from page and Login',async ({page}) => {
     //console.log(await cardTitles.allTextContents());
 });
 
-test.skip('Child window interaction',async ({browser}) => {
-    const context = await browser.newContext();
+test('Child window interaction',async ({browser}) => {
+    const context = await browser.newContext({ignoreHTTPSErrors: true});
     const page = await context.newPage();
     const linkDoc = page.locator('[href*="documents-request"]');
     await page.goto('http://www.rahulshettyacademy.com/loginpagePractise/');
