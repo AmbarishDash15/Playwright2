@@ -79,7 +79,7 @@ test('Handle Dialog Boxes',async({page})=> {
         }
         else{
             console.log('Alert box message: '+dialogMsg);
-            await dialog.dismiss();
+            await dialog.accept();
         }
         
     });
