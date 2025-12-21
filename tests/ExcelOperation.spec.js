@@ -2,11 +2,11 @@ const {test, expect} = require('@playwright/test');
 const {MiscUtils} = require('./utils/MiscUtils');
 const {ExcelUtils} = require('./utils/ExcelUtils');
 
-test.only('Update Price with Excel operation',async({page}) => {
+test('Update Price with Excel operation',async({page}) => {
     const itemName = 'Orange';
     const newPrice = '500';
     const fileName = 'download.xlsx'
-    const filePath = './tests/downloads/'
+    const filePath = './downloads/'
     const fileDownloadFullPath = filePath+fileName;
     const miscUtils = new MiscUtils();
     await miscUtils.checkAndDeleteFile(fileDownloadFullPath);
