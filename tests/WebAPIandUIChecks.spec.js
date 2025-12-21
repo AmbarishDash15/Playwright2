@@ -20,9 +20,9 @@ test('End to End using API Login', async({page}) => {
     },token);
     await page.goto('https://rahulshettyacademy.com/client');
     const itemNameList = page.locator('div.card-body');
-    const cartButton = page.locator('button.btn-custom i.fa-shopping-cart');
+    const cartButton = page.locator('button[routerlink*="cart"]');
     const checkOutBtn = page.locator('li.totalRow button');
-    const cartSection = page.locator('div.cart');
+    const cartItem = page.locator('div li');
     const cartItemName = page.locator('div.cartSection h3');
     const itemCount = await itemNameList.count();
     for(var i = 1;i <= itemCount;i++){
@@ -35,8 +35,9 @@ test('End to End using API Login', async({page}) => {
     //verify added item on cart page
     await page.getByText('Product Added To Cart').waitFor({state:'hidden'});
     await cartButton.click();
-    await cartSection.waitFor({state : 'visible'});
-    expect(await cartItemName.textContent()).toContain(itemToBuy);
+    await page.waitForLoadState('networkidle');
+    await cartItem.first().waitFor();
+    await expect(cartItemName).toContainText(itemToBuy);
 
     //go to check out page and fill details
     const creditCardNoField = page.locator('div.form__cc input').first();
@@ -88,17 +89,17 @@ test('End to End using API Login', async({page}) => {
     const orderIDField = page.locator('label.ng-star-inserted');
     const prodNameConfPage = page.locator('td.m-3 div.title');
     await placeOrderBtn.click();
-    await page.waitForLoadState('networkidle');
-    expect(await orderConfirmationLabel.textContent()).toContain('Thankyou for the order');
+    await orderConfirmationLabel.waitFor({state:'visible'});
+    await expect(orderConfirmationLabel).toContainText('Thankyou for the order');
     const orderIDFull = await orderIDField.textContent();
     const orderID = orderIDFull.trim().split(' ')[1];
     const ordersBtn = page.locator('button[routerlink*="/myorders"]');
-    expect(await prodNameConfPage.textContent()).toBe(itemToBuy);
+    await expect( prodNameConfPage).toHaveText(itemToBuy);
 
     //Go to Orders page and verify order
     await ordersBtn.click();
     await page.waitForLoadState('networkidle');
-    expect(await page.locator('h1.ng-star-inserted').textContent()).toContain('Your Orders');
+    await expect(page.locator('h1.ng-star-inserted')).toContainText('Your Orders');
     const orderRows = page.locator('tr.ng-star-inserted');
     const orderCount = await orderRows.count();
     //Search for orders based on ORDER ID in table and click on Order details
@@ -115,9 +116,8 @@ test('End to End using API Login', async({page}) => {
     const orderSummOrderID = page.locator('div.col-text');
     const deliveryAddress = page.locator('div.address').last();
     const orderSummItemName = page.locator('div.title');
-    await page.waitForLoadState('networkidle');
     await orderSummaryLabel.waitFor({state: 'visible'});
-    expect(await orderSummaryLabel.textContent()).toContain('order summary');
+    await expect(orderSummaryLabel).toContainText('order summary');
     expect(await orderSummOrderID.textContent()).toContain(orderID);
     expect(await deliveryAddress.locator('p.text').first().textContent()).toContain(loginEmail);
     expect(await deliveryAddress.locator('p.text').last().textContent()).toContain(countryToSelect);
