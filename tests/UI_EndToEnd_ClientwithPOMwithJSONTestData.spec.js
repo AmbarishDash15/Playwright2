@@ -1,51 +1,40 @@
 const {test, expect} = require('@playwright/test');
 const {PageObjectManager} = require('../pageObjects/PageObjectManager');
+const testData = JSON.parse(JSON.stringify(require('../testdata/UI_EndToEnd_Client-TestDataSingleSet.json')))
 
-test('End to End Client App with POM',async({page}) => {
-    const appUrl = 'https://rahulshettyacademy.com/client'; //test data
-    const loginEmail = 'dash.ambarish15+sixth@gmail.com'; //test data
-    const password = 'Password@123'; //test data
-    const itemToBuy = 'ZARA COAT 3'; //testdata
-    const ccNo = '4242424242424242'; //testdata
-    const ccExpMonth = '12'; //testdata
-    const ccExpYear = '30'; //testdata
-    const ccCVV = '123'; //testdata
-    const ccNameOnCard = 'Tester'; //testdata
-    const couponToApply = 'rahulshettyacademy'; //testdata
-    const country = 'India'; //testdata
-
+test('End to End Client App with POM with JSON Test Data',async({page}) => {
     const pageObjectManager = new PageObjectManager(page);//Initiate Page Object Manager
     
     //Navigate to Login page and perform valid login
     const loginPage = await pageObjectManager.getLoginPage();
-    await loginPage.openApplicationUrl(appUrl); 
-    await loginPage.validLogin(loginEmail,password); 
+    await loginPage.openApplicationUrl(testData.appUrl); 
+    await loginPage.validLogin(testData.loginEmail,testData.password); 
     
     //Search for item and add to cart
     const dashboardPage = await pageObjectManager.getDashboardPage();
-    await dashboardPage.selectItemAndAddToCart(itemToBuy);
+    await dashboardPage.selectItemAndAddToCart(testData.itemToBuy);
     await dashboardPage.verifyAddedToCartMsg();
     await dashboardPage.goToCart();
     
     //Verify item on Cart page and checkout
     const cartPage = await pageObjectManager.getCartPage();
-    await cartPage.verifyProductAddedToCart(itemToBuy);
+    await cartPage.verifyProductAddedToCart(testData.itemToBuy);
     await cartPage.clickCheckOut();
     
     //Enter details on Check out page and Checkout
     const checkOutPage = await pageObjectManager.getCheckOutPage();
-    await checkOutPage.clearAndEnterCCNo(ccNo);
-    await checkOutPage.selectExpMonthYear(ccExpMonth,ccExpYear);
-    await checkOutPage.enterCVVField(ccCVV);
-    await checkOutPage.enterNameonCCField(ccNameOnCard);
-    await checkOutPage.verifyEmailIDPopulated(loginEmail);
-    await checkOutPage.selectCountry(country); //involves type ahead combobox
-    await checkOutPage.applyCoupon(couponToApply); //apply and verify successful coupon
+    await checkOutPage.clearAndEnterCCNo(testData.ccNo);
+    await checkOutPage.selectExpMonthYear(testData.ccExpMonth,testData.ccExpYear);
+    await checkOutPage.enterCVVField(testData.ccCVV);
+    await checkOutPage.enterNameonCCField(testData.ccNameOnCard);
+    await checkOutPage.verifyEmailIDPopulated(testData.loginEmail);
+    await checkOutPage.selectCountry(testData.country); //involves type ahead combobox
+    await checkOutPage.applyCoupon(testData.couponToApply); //apply and verify successful coupon
     await checkOutPage.clickPlaceOrderBtn();
 
     //Verify order confirmation and grab the ORDER ID
     const orderConfirmationPage = await pageObjectManager.getOrderConfirmationPage();
-    await orderConfirmationPage.verifyDetailsOnConfirmationPage(itemToBuy);
+    await orderConfirmationPage.verifyDetailsOnConfirmationPage(testData.itemToBuy);
     const orderID = await orderConfirmationPage.getOrderIDFromConfPage();
 
     //Go to Orders page
@@ -58,5 +47,5 @@ test('End to End Client App with POM',async({page}) => {
     
     //verify order id and other details on Order details page
     const orderDetailsPage = await pageObjectManager.getOrderDetailsPage();
-    await orderDetailsPage.verifyOrderDetails(orderID, loginEmail, country, itemToBuy);
+    await orderDetailsPage.verifyOrderDetails(orderID, testData.loginEmail, testData.country, testData.itemToBuy);
 })

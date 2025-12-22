@@ -1,5 +1,5 @@
 const{test, expect, request} = require('@playwright/test');
-const{APIUtils} = require('./utils/APIUtils');
+const{APIUtils} = require('../utils/APIUtils');
 const loginEmail = 'dash.ambarish15+first@gmail.com';
 const countryToSelect = 'India';
 const loginPayload = {userEmail:loginEmail,userPassword:'Password@123'};

@@ -1,5 +1,5 @@
 const {test, expect, request} = require('@playwright/test');
-const {APIUtils} = require('./utils/APIUtils');
+const {APIUtils} = require('../utils/APIUtils');
 const loginPayload = {userEmail:'dash.ambarish15@gmail.com',userPassword:'Password@123'};
 const emptyOrderListRespone = {data:[],message:'No Orders'};
 var token;
