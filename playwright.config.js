@@ -13,7 +13,7 @@ const { config } = require('process');
  */
 module.exports = defineConfig({
   testDir: './tests',
-  timeout: 80*1000,
+  timeout: 30*1000,
   expect: {
     timeout: 10*1000,
   },
@@ -34,7 +34,8 @@ module.exports = defineConfig({
     headless : true,
     screenshot : 'on',
     trace : 'on',
-    ignoreHTTPSErrors: true
+    ignoreHTTPSErrors: true,
+    video : 'retain-on-failure'
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
 
