@@ -8,6 +8,8 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /downloads/
+/allure-results/
+/allure-report/
 
 # Playwright
 /playwright/.auth/
