@@ -1,5 +1,4 @@
-const {test, expect} = require('@playwright/test')
-test.describe.configure({mode: 'serial'});
+const {test, expect} = require('@playwright/test');
 
 
 test('Browser Context Playwright Test',async ({browser}) => {
