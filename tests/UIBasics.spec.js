@@ -13,7 +13,7 @@ test('Page Playwright Test',async ({page}) => {
     await expect(page).toHaveTitle('Google');
 });
 
-test('Validate Incorrect Login Error',async ({browser}) => {
+test('Validate Incorrect Login Error', {tag: ['@sanity', '@regression']}, async ({browser}) => {
     const context = await browser.newContext({ignoreHTTPSErrors: true});
     const page = await context.newPage();
     await page.goto('http://www.rahulshettyacademy.com/loginpagePractise/');
@@ -24,7 +24,7 @@ test('Validate Incorrect Login Error',async ({browser}) => {
     await expect(page.locator('[style*="block"]')).toContainText('Incorrect username/password.');
 });
 
-test('Validate Empty User Name Login Error',async ({browser}) => {
+test('Validate Empty User Name Login Error', {tag: ['@sanity']},async ({browser}) => {
     const context = await browser.newContext({ignoreHTTPSErrors: true});
     const page = await context.newPage();
     await page.goto('http://www.rahulshettyacademy.com/loginpagePractise/');
@@ -35,7 +35,7 @@ test('Validate Empty User Name Login Error',async ({browser}) => {
     await expect(page.locator('[style*="block"]')).toContainText('Empty username/password.');
 });
 
-test('Get Login Credentials from page',async ({browser}) => {
+test('Get Login Credentials from page', {tag: ['@sanity', '@regression']},async ({browser}) => {
     const context = await browser.newContext({ignoreHTTPSErrors: true});
     const page = await context.newPage();
     await page.goto('http://www.rahulshettyacademy.com/loginpagePractise/');
@@ -46,7 +46,7 @@ test('Get Login Credentials from page',async ({browser}) => {
     await console.log('User Name : '+userName+' and Password : '+passWord)
 });
 
-test('Interact Login page UI elements',async ({browser}) => {
+test('Interact Login page UI elements', {tag: [ '@regression']},async ({browser}) => {
     const context = await browser.newContext({ignoreHTTPSErrors: true});
     const page = await context.newPage();
     const userNameField = page.locator('#username');
